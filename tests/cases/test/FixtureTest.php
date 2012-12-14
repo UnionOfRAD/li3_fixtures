@@ -92,7 +92,7 @@ class FixtureTest extends \lithium\test\Unit {
 
 		$fixture->truncate();
 		$call = $this->_callable->call[0];
-		$this->assertEqual('truncate', $call['method']);
+		$this->assertEqual('delete', $call['method']);
 	}
 
 	public function testSave() {
@@ -301,20 +301,20 @@ class FixtureTest extends \lithium\test\Unit {
 		MockLogCall::$returnStatic = array('enabled' => false);
 		$fixture->drop();
 		$call = $this->_callable->call[0];
-		$this->assertEqual('truncate', $call['method']);
+		$this->assertEqual('delete', $call['method']);
 
 		$this->_callable->__clear();
 		$fixture->create();
 		$call = $this->_callable->call[0];
 		$this->assertEqual(1, count($this->_callable->call));
-		$this->assertEqual('truncate', $call['method']);
+		$this->assertEqual('delete', $call['method']);
 
 
 		$this->_callable->__clear();
 		$fixture->save();
 		$this->assertEqual(2, count($this->_callable->call));
 		$call = $this->_callable->call[0];
-		$this->assertEqual('truncate', $call['method']);
+		$this->assertEqual('delete', $call['method']);
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
 		$this->assertEqual($record, $call['params'][0]->data());

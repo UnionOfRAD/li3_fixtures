@@ -283,7 +283,9 @@ class Fixture extends \lithium\data\Schema {
 	public function truncate() {
 		$connections = $this->_classes['connections'];
 		$db = $connections::get($this->_connection);
-		return $db->truncate($this->_source);
+		$options = array('source' => $this->_source);
+		$query = $this->_instance('query', $options);
+		return $db->delete($query);
 	}
 
 	public function alter($mode = null, $key = null, $value = array()) {
