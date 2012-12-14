@@ -186,24 +186,22 @@ class Fixture extends \lithium\data\Schema {
 		$connections = $this->_classes['connections'];
 		$db = $connections::get($this->_connection);
 
-		if (!$db::enabled('schema')) {
-			return true;
-		}
-
 		if ($drop && !$this->drop()) {
 			return false;
 		}
 
 		$this->_alteredFields = $this->_alterFields($this->_fields);
 
-		$schema = $this->_instance('schema', array(
-			'fields' => $this->_alteredFields,
-			'meta' => $this->_meta,
-			'locked' => $this->_locked
-		));
+		if ($db::enabled('schema')) {
+			$schema = $this->_instance('schema', array(
+				'fields' => $this->_alteredFields,
+				'meta' => $this->_meta,
+				'locked' => $this->_locked
+			));
 
-		$return = $db->createSchema($this->_source, $schema);
-
+			$return = $db->createSchema($this->_source, $schema);
+		}
+		
 		if ($return && $save) {
 			foreach ($this->_records as $record) {
 				if (!$this->populate($record, true)) {
