@@ -163,7 +163,9 @@ Example:
 ```php
 <?php
 Fixtures::save('db', array('contacts'));
-Contacts::config(array('meta' => array('connection' => 'test'))); //This is not needed
+//The line bellow is not needed since Contacts have been configured by ContactsFixture.
+Contacts::config(array('meta' => array('connection' => 'lithium_mysql_test')));
+var_export(Contacts::find('all')->data());
 ?>
 ```
 
