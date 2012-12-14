@@ -1,22 +1,22 @@
 # Fixtures managment
 
+## Requirement
+
+Last lithium dev branch (14/12/2012)
+
 ## Installation
 
 Checkout the code to either of your library directories:
 
 ```
-
 cd libraries
 git clone git@github.com:UnionOfRAD/li3_fixtures.git
-
 ```
 
 Include the library in in your `/app/config/bootstrap/libraries.php`
 
 ```
-
 Libraries::add('li3_fixtures');
-
 ```
 
 ## Presentation
@@ -73,7 +73,6 @@ class SampleTest extends \lithium\test\Unit {
 	}
 }
 ?>
-
 ```
 
 ### The Fixtures class
@@ -101,7 +100,6 @@ class ContactsFixture extends \li3_fixtures\test\Fixture {
 	);
 }
 ?>
-
 ```
 
 ```php
@@ -111,7 +109,6 @@ namespace app\models;
 
 class Contacts extends \lithium\data\Model {}
 ?>
-
 ```
 
 If you have numbers of fixtures, it will be interesting to use the `Fixtures` class.
@@ -155,7 +152,6 @@ class Sample2Test extends \lithium\test\Unit {
 	}
 }
 ?>
-
 ```
 
 Ok so why it's better to set the `Fixture::_model` instead of `Fixture::_source` ? Long story short,
@@ -169,7 +165,6 @@ Example:
 Fixtures::save('db', array('contacts'));
 Contacts::config(array('meta' => array('connection' => 'test'))); //This is not needed
 ?>
-
 ```
 
 ### Advanced use case
@@ -208,7 +203,6 @@ $fixture->alter('change', array(
 
 $fixture->alter('drop', 'bigintger'); //Simply dropping a field
 ?>
-
 ```
 
 Note :
@@ -217,7 +211,6 @@ You can recover a specific fixture's instance from `Fixtures` using:
 
 ```php
 <?php
-	$fixture = Fixtures::get('db', 'contacts');
+$fixture = Fixtures::get('db', 'contacts');
 ?>
-
 ```
