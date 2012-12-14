@@ -1,4 +1,4 @@
-# Database schema managment
+# Fixtures managment
 
 ## Installation
 
