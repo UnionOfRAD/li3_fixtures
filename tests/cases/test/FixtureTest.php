@@ -124,13 +124,13 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual($records[0], $query->data());
+		$this->assertEqual(array('data' => $records[0]), $query->data());
 
 		$call = $this->_callable->call[2];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual($records[1], $query->data());
+		$this->assertEqual(array('data' => $records[1]), $query->data());
 	}
 
 	public function testAlter() {
@@ -198,13 +198,13 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual($expected[0], $query->data());
+		$this->assertEqual(array('data' => $expected[0]), $query->data());
 
 		$call = $this->_callable->call[2];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual($expected[1], $query->data());
+		$this->assertEqual(array('data' => $expected[1]), $query->data());
 	}
 
 	public function testPopulate() {
@@ -232,7 +232,7 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual($record, $query->data());
+		$this->assertEqual(array('data' => $record), $query->data());
 	}
 
 	public function testLiveAlter() {
@@ -273,7 +273,7 @@ class FixtureTest extends \lithium\test\Unit {
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
 		$expected = array('_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate');
-		$this->assertEqual($expected, $query->data());
+		$this->assertEqual(array('data' => $expected), $query->data());
 
 		$record = array('id' => 1, 'name' => 'Nate', 'useless' => 'a');
 		$fixture->populate($record, false);
@@ -282,7 +282,7 @@ class FixtureTest extends \lithium\test\Unit {
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
 		$expected = array('id' => 1, 'name' => 'Nate');
-		$this->assertEqual(array(), $query->data());
+		$this->assertEqual(array('data' => array()), $query->data());
 	}
 
 	public function testSchemaLess() {
@@ -317,7 +317,7 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('delete', $call['method']);
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
-		$this->assertEqual($record, $call['params'][0]->data());
+		$this->assertEqual(array('data' => $record), $call['params'][0]->data());
 	}
 }
 

@@ -270,9 +270,11 @@ class Fixture extends \lithium\data\Schema {
 		if ($this->_locked) {
 			$data = array_intersect_key($data, $this->_alteredFields);
 		}
-		$options = array('type' => 'create', 'source' => $this->_source, 'data' => $data);
+		$options = array(
+			'type' => 'create', 'source' => $this->_source, 'data' => array('data' => $data)
+		);
 		$query = $this->_instance('query', $options);
-		return $db->create($query, $record, $this);
+		return $db->create($query);
 	}
 
 	/**
