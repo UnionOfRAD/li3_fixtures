@@ -1,9 +1,5 @@
 # Database schema managment
 
-## Requirement
-
-PHP 5.4
-
 ## Installation
 
 Checkout the code to either of your library directories:
