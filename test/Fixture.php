@@ -116,6 +116,13 @@ class Fixture extends \lithium\data\Schema {
 	protected $_records = array();
 
 	/**
+	 * If `true` only fields in `Fixture::_fields` are allowed in records (kind of whitelist).
+	 *
+	 * @var boolean
+	 */
+	protected $_locked = null;
+
+	/**
 	 * Initializes class configuration (`$_config`), and assigns object properties using the
 	 * `_init()` method, unless otherwise specified by configuration. See below for details.
 	 *
@@ -143,9 +150,21 @@ class Fixture extends \lithium\data\Schema {
 			throw new ConfigException("The `'model'` or `'source'` option must be set.");
 		}
 
+		$connections = $this->_classes['connections'];
+		$db = $connections::get($this->_connection);
+
 		if ($model = $this->_model) {
 			$model::config(array('meta' => array('connection' => $this->_connection)));
 			$this->_source = $this->_source ? : $model::meta('source');
+			$this->_locked = ($this->_locked === null) ? $model::meta('locked') : $this->_locked;
+		}
+
+		if ($this->_locked === null) {
+			if ($db::enabled('schema')) {
+				$this->_locked = true;
+			} else {
+				$this->_locked = false;
+			}
 		}
 
 		foreach ($this->_config['alters'] as $mode => $values) {
@@ -191,6 +210,7 @@ class Fixture extends \lithium\data\Schema {
 		}
 
 		$this->_alteredFields = $this->_alterFields($this->_fields);
+		$return = true;
 
 		if ($db::enabled('schema')) {
 			$schema = $this->_instance('schema', array(
@@ -201,7 +221,7 @@ class Fixture extends \lithium\data\Schema {
 
 			$return = $db->createSchema($this->_source, $schema);
 		}
-		
+
 		if ($return && $save) {
 			foreach ($this->_records as $record) {
 				if (!$this->populate($record, true)) {
@@ -247,7 +267,9 @@ class Fixture extends \lithium\data\Schema {
 		$connections = $this->_classes['connections'];
 		$db = $connections::get($this->_connection);
 		$data = $alter ? $this->_alterRecord($record) : $record;
-		$data = array_intersect_key($data, $this->_alteredFields);
+		if ($this->_locked) {
+			$data = array_intersect_key($data, $this->_alteredFields);
+		}
 		$options = array('type' => 'create', 'source' => $this->_source, 'data' => $data);
 		$query = $this->_instance('query', $options);
 		return $db->create($query, $record, $this);
