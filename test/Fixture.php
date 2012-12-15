@@ -280,11 +280,18 @@ class Fixture extends \lithium\data\Schema {
 	/**
 	 * Truncates the current fixture.
 	 *
+	 * @param boolean $soft If `true` and there's not existing schema, no truncate is generated.
 	 * @return boolean
 	 */
-	public function truncate() {
+	public function truncate($soft = true) {
 		$connections = $this->_classes['connections'];
 		$db = $connections::get($this->_connection);
+		if ($soft) {
+			$sources = $db->sources();
+			if(!in_array($this->_source, $sources)) {
+				return true;
+			}
+		}
 		$options = array('source' => $this->_source);
 		$query = $this->_instance('query', $options);
 		return $db->delete($query);
