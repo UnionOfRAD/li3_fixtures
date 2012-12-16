@@ -31,8 +31,7 @@ This plugin needs [li3_sqltools](https://github.com/UnionOfRAD/li3_sqltools) if 
 
 ### The Fixture class
 
-Methods:
---------
+#### Methods:
 
 - Fixture::create($safe); //Create the source only
 - Fixture::save($safe); //Create the source + save the fixture's records in.
