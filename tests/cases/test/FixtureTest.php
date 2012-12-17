@@ -90,8 +90,19 @@ class FixtureTest extends \lithium\test\Unit {
 			'source' => 'contacts'
 		));
 
+		$fixture->truncate(false);
+		$call = $this->_callable->call[0];
+		$this->assertEqual('delete', $call['method']);
+
+		$this->_callable->__clear();
+		$this->_callable->return = array('sources' => array('contacts'));
+
 		$fixture->truncate();
 		$call = $this->_callable->call[0];
+		$this->assertEqual('sources', $call['method']);
+
+		$fixture->truncate();
+		$call = $this->_callable->call[1];
 		$this->assertEqual('delete', $call['method']);
 	}
 
@@ -299,23 +310,33 @@ class FixtureTest extends \lithium\test\Unit {
 		));
 
 		MockLogCall::$returnStatic = array('enabled' => false);
+		$this->_callable->return = array('sources' => array('contacts'));
+
 		$fixture->drop();
 		$call = $this->_callable->call[0];
+		$this->assertEqual('sources', $call['method']);
+		$call = $this->_callable->call[1];
 		$this->assertEqual('delete', $call['method']);
 
 		$this->_callable->__clear();
+		$this->_callable->return = array('sources' => array('contacts'));
 		$fixture->create();
 		$call = $this->_callable->call[0];
-		$this->assertEqual(1, count($this->_callable->call));
+		$this->assertEqual('sources', $call['method']);
+		$call = $this->_callable->call[1];
+		$this->assertEqual(2, count($this->_callable->call));
 		$this->assertEqual('delete', $call['method']);
 
 
 		$this->_callable->__clear();
+		$this->_callable->return = array('sources' => array('contacts'));
 		$fixture->save();
-		$this->assertEqual(2, count($this->_callable->call));
+		$this->assertEqual(3, count($this->_callable->call));
 		$call = $this->_callable->call[0];
-		$this->assertEqual('delete', $call['method']);
+		$this->assertEqual('sources', $call['method']);
 		$call = $this->_callable->call[1];
+		$this->assertEqual('delete', $call['method']);
+		$call = $this->_callable->call[2];
 		$this->assertEqual('create', $call['method']);
 		$this->assertEqual(array('data' => $record), $call['params'][0]->data());
 	}
