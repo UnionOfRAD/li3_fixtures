@@ -215,3 +215,6 @@ You can recover a specific fixture's instance from `Fixtures` using:
 $fixture = Fixtures::get('db', 'contacts');
 ?>
 ```
+
+## Build status
+[![Build Status](https://secure.travis-ci.org/UnionOfRAD/li3_fixtures.png?branch=master)](http://travis-ci.org/UnionOfRAD/li3_fixtures)
