@@ -1,9 +1,5 @@
 # Fixtures managment
 
-## Requirement
-
-Last lithium dev branch (14/12/2012)
-
 ## Installation
 
 Checkout the code to either of your library directories:
