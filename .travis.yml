@@ -10,6 +10,6 @@ php:
 before_script:
   - mkdir ../libraries
   - git clone --branch=master --depth=100 --quiet git://github.com/UnionOfRAD/lithium.git ../libraries/lithium
-  - php tests/ci_depends.php $OPCODE_CACHE
+  - php ../libraries/lithium/tests/ci_depends.php $OPCODE_CACHE
 
 script: ../libraries/lithium/console/li3 test --filters=Profiler tests/cases
