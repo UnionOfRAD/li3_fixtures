@@ -69,7 +69,7 @@ class Fixture extends \lithium\data\Schema {
 	protected $_fields = array();
 
 	/**
-	 * Alteres dields definition
+	 * Altered fields definition
 	 *
 	 * @var array
 	 */
@@ -235,7 +235,7 @@ class Fixture extends \lithium\data\Schema {
 	/**
 	 * Drop table for this fixture.
 	 *
-	 * @param boolean $soft If `true` and there's not existing schema, no drop query is generated.
+	 * @param boolean $soft If `true` and there's no existing schema, no drop query is generated.
 	 * @return boolean True on success, false on failure
 	 */
 	public function drop($soft = true) {
@@ -254,7 +254,7 @@ class Fixture extends \lithium\data\Schema {
 	}
 
 	/**
-	 * Populate a custom records in the database.
+	 * Populate custom records in the database.
 	 *
 	 * @param array $record The data of the record
 	 * @param boolean $alter If true, the `$record` will be altered according the alter rules.
@@ -280,7 +280,7 @@ class Fixture extends \lithium\data\Schema {
 	/**
 	 * Truncates the current fixture.
 	 *
-	 * @param boolean $soft If `true` and there's not existing schema, no truncate is generated.
+	 * @param boolean $soft If `true` and there's no existing schema, no truncate is generated.
 	 * @return boolean
 	 */
 	public function truncate($soft = true) {
