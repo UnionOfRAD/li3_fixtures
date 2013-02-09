@@ -13,7 +13,7 @@ use lithium\core\ConfigException;
 class Fixtures extends \lithium\core\Adaptable {
 
 	/**
-	 * Stores configurations arrays for session adapters, keyed by configuration name.
+	 * Stores configuration arrays for session adapters, keyed by configuration name.
 	 *
 	 * @var array
 	 */
