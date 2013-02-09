@@ -70,7 +70,7 @@ class Connection extends \lithium\core\Object {
 	/**
 	 * Instantiate a fixture
 	 *
-	 * @param array $name The fixture name to instanciate
+	 * @param array $name The fixture name to instantiate
 	 * @return boolean Returns `true` on success
 	 */
 	protected function _instantiate($name) {
@@ -90,7 +90,7 @@ class Connection extends \lithium\core\Object {
 	 * Getting a fixture.
 	 *
 	 * @param mixed $name The fixture name to get.
-	 * @return mixed Returns a fixture object or `null` if doesn't exists.
+	 * @return mixed Returns a fixture object or `null` if doesn't exist.
 	 */
 	public function get($name) {
 		if (isset($this->_loaded[$name]) || $this->_instantiate($name)) {
