@@ -138,7 +138,7 @@ class Sample2Test extends \lithium\test\Unit {
 	}
 
 	public function tearDown() {
-		Fixtures::reset('db');
+		Fixtures::clear('db');
 	}
 
 	public function testFixture() {
