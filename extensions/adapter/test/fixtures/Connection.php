@@ -172,7 +172,7 @@ class Connection extends \lithium\core\Object {
 	 *
 	 * @param array $names The fixtures name to drop.
 	 */
-	public function reset() {
+	public function clear() {
 		foreach ($this->_loaded as $name => $fixture) {
 			$fixture->drop();
 		}
