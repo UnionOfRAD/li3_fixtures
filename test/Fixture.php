@@ -244,7 +244,7 @@ class Fixture extends \lithium\data\Schema {
 		if (!$db::enabled('schema')) {
 			return $this->truncate();
 		}
-		if ($soft) {
+		if ($soft && $db::enabled('sources')) {
 			$sources = $db->sources();
 			if(!in_array($this->_source, $sources)) {
 				return true;
@@ -286,7 +286,7 @@ class Fixture extends \lithium\data\Schema {
 	public function truncate($soft = true) {
 		$connections = $this->_classes['connections'];
 		$db = $connections::get($this->_connection);
-		if ($soft) {
+		if ($soft && $db::enabled('sources')) {
 			$sources = $db->sources();
 			if(!in_array($this->_source, $sources)) {
 				return true;
