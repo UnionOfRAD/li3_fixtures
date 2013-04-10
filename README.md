@@ -17,11 +17,13 @@ Libraries::add('li3_fixtures');
 
 ## Presentation
 
-Thin plugin provide fixtures managment over connections. Should work with any kind of `Source` adapaters.
+This plugin provide fixtures managment. Should work with any kind of `Source` adapaters.
 
-## Dependencies
+## Note
 
-This plugin needs [li3_sqltools](https://github.com/UnionOfRAD/li3_sqltools) if you want to make it work with li3's `Database` adapters. For schema less datasources, adapters must return `false` on `::enabled('schema')` call.
+The fixture class support the following datasource's hints:
+- If `Source::enabled('schema')` returns `true`, the `Fixture` manage schema (i.e create/drop) via `Source::createSchema()` & `Source::dropSchema()`.
+- If `Source::enabled('sources')` returns `true`, the `Fixture` allow soft drop (i.e safe options).
 
 ## API
 
