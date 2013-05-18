@@ -1,0 +1,23 @@
+{
+    "name": "UnionOfRAD/li3_fixtures",
+    "type": "lithium-library",
+    "description": "The fixtures library for the Lithium PHP framework",
+    "keywords": ["lithium", "fixtures", "testing"],
+    "homepage": "http://lithify.me",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Union of RAD",
+            "homepage": "http://union-of-rad.org"
+        },
+        {
+            "name": "The Lithium Community",
+            "homepage": "http://github.com/UnionOfRAD/li3_fixtures/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "composer/installers": "dev-master"
+    }
+}
