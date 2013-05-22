@@ -1,5 +1,5 @@
 {
-    "name": "UnionOfRAD/li3_fixtures",
+    "name": "unionofrad/li3_fixtures",
     "type": "lithium-library",
     "description": "The fixtures library for the Lithium PHP framework",
     "keywords": ["lithium", "fixtures", "testing"],
