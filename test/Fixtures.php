@@ -34,16 +34,13 @@ class Fixtures extends \lithium\core\Adaptable {
 	 * @param array $params The parameters array.
 	 * @return mixed
 	 */
-
 	public static function __callStatic($method, $params) {
 		$name = array_shift($params);
+
 		if (($config = static::_config($name)) === null) {
 			throw new ConfigException("Configuration `{$name}` has not been defined.");
 		}
-		$filter = function($self, $params) use ($name, $method) {
-			return call_user_func_array(array($self::adapter($name), $method), $params);
-		};
-		return static::_filter(__FUNCTION__, $params, $filter, (array) $config['filters']);
+		return call_user_func_array(array(static::adapter($name), $method), $params);
 	}
 }
 
