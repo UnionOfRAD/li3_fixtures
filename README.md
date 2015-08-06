@@ -1,29 +1,33 @@
-# Fixtures managment
+# Fixtures Managment
+
+This plugin provide fixtures managment. Should work with any kind of `Source`
+adapters. The fixture class support the following datasource's hints:
+
+- If `Source::enabled('schema')` returns `true`, the `Fixture` manage schema
+  (i.e create/drop) via `Source::createSchema()` & `Source::dropSchema()`.
+
+- If `Source::enabled('sources')` returns `true`, the `Fixture` allow soft drop
+  (i.e safe options).
 
 ## Installation
 
-Checkout the code to either of your library directories:
+The preferred installation method is via composer. You can add
+the library as a dependency via:
 
 ```
-cd libraries
-git clone git@github.com:UnionOfRAD/li3_fixtures.git
+composer require unionofrad/li3_fixtures
 ```
 
-Include the library in in your `/app/config/bootstrap/libraries.php`
+li₃ plugins must be registered within your application bootstrap phase 
+as they use a different (faster) autoloader. 
 
+```php
+Libraries::add('li3_fixtures')
 ```
-Libraries::add('li3_fixtures');
-```
 
-## Presentation
-
-This plugin provide fixtures managment. Should work with any kind of `Source` adapaters.
-
-## Note
-
-The fixture class support the following datasource's hints:
-- If `Source::enabled('schema')` returns `true`, the `Fixture` manage schema (i.e create/drop) via `Source::createSchema()` & `Source::dropSchema()`.
-- If `Source::enabled('sources')` returns `true`, the `Fixture` allow soft drop (i.e safe options).
+The official manual has more information on 
+[how to register the plugin](http://li3.me/docs/manual/installation/plugins.md) 
+with the app or use alternative installation methods (i.e. via GIT).
 
 ## API
 
