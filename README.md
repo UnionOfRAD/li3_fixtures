@@ -1,4 +1,4 @@
-# Fixtures Managment
+# Fixtures Management for the li₃ framework.
 
 This plugin provide fixtures managment. Should work with any kind of `Source`
 adapters. The fixture class support the following datasource's hints:
@@ -218,5 +218,3 @@ $fixture = Fixtures::get('db', 'contacts');
 ?>
 ```
 
-## Build status
-[![Build Status](https://secure.travis-ci.org/UnionOfRAD/li3_fixtures.png?branch=master)](http://travis-ci.org/UnionOfRAD/li3_fixtures)
