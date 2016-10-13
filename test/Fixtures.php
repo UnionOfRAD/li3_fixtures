@@ -17,7 +17,7 @@ class Fixtures extends \lithium\core\Adaptable {
 	 *
 	 * @var array
 	 */
-	protected static $_configurations = array();
+	protected static $_configurations = [];
 
 	/**
 	 * Libraries::locate() compatible path to adapters for this class.
@@ -40,7 +40,7 @@ class Fixtures extends \lithium\core\Adaptable {
 		if (($config = static::_config($name)) === null) {
 			throw new ConfigException("Configuration `{$name}` has not been defined.");
 		}
-		return call_user_func_array(array(static::adapter($name), $method), $params);
+		return call_user_func_array([static::adapter($name), $method], $params);
 	}
 }
 

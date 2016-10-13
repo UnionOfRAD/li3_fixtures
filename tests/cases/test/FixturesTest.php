@@ -18,15 +18,15 @@ class FixturesTest extends \lithium\test\Unit {
 	public function setUp() {
 		Fixtures::reset();
 		$this->_callable = new MockLogCall();
-		Fixtures::config(array(
-			'fixture_test' => array(
+		Fixtures::config([
+			'fixture_test' => [
 				'object' => $this->_callable,
-				'fixtures' => array(
+				'fixtures' => [
 					'image' => 'name\spa\ce',
 					'gallery' => 'na\mespac\e',
-				)
-			)
-		));
+				]
+			]
+		]);
 	}
 
 	public function tearDown() {
@@ -36,32 +36,32 @@ class FixturesTest extends \lithium\test\Unit {
 
 	public function testConstructPassedParams() {
 		Fixtures::reset();
-		$config = array(
+		$config = [
 			'adapter' => 'li3_fixtures\tests\mocks\core\MockLogCall',
-			'fixtures' => array(
+			'fixtures' => [
 				'image' => 'name\spa\ce',
 				'gallery' => 'na\mespac\e',
-			)
-		);
-		Fixtures::config(array(
+			]
+		];
+		Fixtures::config([
 			'fixture_test' => $config
-		));
+		]);
 		$callable = Fixtures::adapter('fixture_test');
-		$expected = $config + array('filters' => array());
+		$expected = $config + ['filters' => []];
 		$this->assertEqual($expected, $callable->construct[0]);
 	}
 
 	public function testCallStatic() {
-		$result = Fixtures::methodName('fixture_test', array('parameter' => 'value'), 'param');
-		$expected = array(
+		$result = Fixtures::methodName('fixture_test', ['parameter' => 'value'], 'param');
+		$expected = [
 			'method' => 'methodName',
-			'params' => array(
-				array(
+			'params' => [
+				[
 					'parameter' => 'value',
-				),
+				],
 				'param'
-			)
-		);
+			]
+		];
 		$this->assertEqual($expected, $this->_callable->call[0]);
 	}
 }

@@ -21,9 +21,9 @@ class FixtureTest extends \lithium\test\Unit {
 
 	public function skip() {
 		$this->_callable = new MockLogCall();
-		Connections::add($this->_connection, array(
+		Connections::add($this->_connection, [
 			'object' => $this->_callable
-		));
+		]);
 	}
 
 	public function tearDown() {
@@ -37,24 +37,24 @@ class FixtureTest extends \lithium\test\Unit {
 
 	public function testInitMissingModelAndSource() {
 		$this->expectException("The `'model'` or `'source'` option must be set.");
-		new Fixture(array('connection' => $this->_connection));
+		new Fixture(['connection' => $this->_connection]);
 	}
 
 	public function testCreate() {
-		$fields = array(
-			'id' => array('type' => 'id'),
-			'name' => array('type' => 'string')
-		);
+		$fields = [
+			'id' => ['type' => 'id'],
+			'name' => ['type' => 'string']
+		];
 
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts',
 			'fields' => $fields,
-			'records' => array(
-				array('id' => 1, 'name' => 'Nate'),
-				array('id' => 2, 'name' => 'Gwoo')
-			)
-		));
+			'records' => [
+				['id' => 1, 'name' => 'Nate'],
+				['id' => 2, 'name' => 'Gwoo']
+			]
+		]);
 
 		$fixture->create(false);
 		$this->assertEqual(1, count($this->_callable->call));
@@ -69,10 +69,10 @@ class FixtureTest extends \lithium\test\Unit {
 	}
 
 	public function testDrop() {
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts'
-		));
+		]);
 
 		$fixture->drop(false);
 		$call = $this->_callable->call[0];
@@ -85,17 +85,17 @@ class FixtureTest extends \lithium\test\Unit {
 	}
 
 	public function testTruncate() {
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts'
-		));
+		]);
 
 		$fixture->truncate(false);
 		$call = $this->_callable->call[0];
 		$this->assertEqual('delete', $call['method']);
 
 		$this->_callable->__clear();
-		$this->_callable->return = array('sources' => array('contacts'));
+		$this->_callable->return = ['sources' => ['contacts']];
 
 		$fixture->truncate();
 		$call = $this->_callable->call[0];
@@ -107,22 +107,22 @@ class FixtureTest extends \lithium\test\Unit {
 	}
 
 	public function testSave() {
-		$fields = array(
-			'id' => array('type' => 'id'),
-			'name' => array('type' => 'string')
-		);
+		$fields = [
+			'id' => ['type' => 'id'],
+			'name' => ['type' => 'string']
+		];
 
-		$records = array(
-			array('id' => 1, 'name' => 'Nate'),
-			array('id' => 2, 'name' => 'Gwoo')
-		);
+		$records = [
+			['id' => 1, 'name' => 'Nate'],
+			['id' => 2, 'name' => 'Gwoo']
+		];
 
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts',
 			'fields' => $fields,
 			'records' => $records
-		));
+		]);
 
 		$fixture->save(false);
 		$this->assertEqual(3, count($this->_callable->call));
@@ -135,56 +135,56 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual(array('data' => $records[0]), $query->data());
+		$this->assertEqual(['data' => $records[0]], $query->data());
 
 		$call = $this->_callable->call[2];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual(array('data' => $records[1]), $query->data());
+		$this->assertEqual(['data' => $records[1]], $query->data());
 	}
 
 	public function testAlter() {
-		$fields = array(
-			'id' => array('type' => 'id'),
-			'name' => array('type' => 'string'),
-			'useless' => array('type' => 'string')
-		);
+		$fields = [
+			'id' => ['type' => 'id'],
+			'name' => ['type' => 'string'],
+			'useless' => ['type' => 'string']
+		];
 
-		$records = array(
-			array('id' => 1, 'name' => 'Nate', 'useless' => 'a'),
-			array('id' => 2, 'name' => 'Gwoo', 'useless' => 'b')
-		);
+		$records = [
+			['id' => 1, 'name' => 'Nate', 'useless' => 'a'],
+			['id' => 2, 'name' => 'Gwoo', 'useless' => 'b']
+		];
 
-		$alters = array(
-			'add' => array(
-				'lastname' => array('type' => 'string', 'default' => 'li3')
-			),
-			'change' => array(
-				'id' => array(
+		$alters = [
+			'add' => [
+				'lastname' => ['type' => 'string', 'default' => 'li3']
+			],
+			'change' => [
+				'id' => [
 					'type' => 'string',
 					'length' => '24',
 					'to' => '_id',
 					'value' => function ($val) {
 						return new MongoId('4c3628558ead0e594' . (string) ($val + 1000000));
 					}
-				),
-				'name' => array(
+				],
+				'name' => [
 					'to' => 'firstname'
-				)
-			),
-			'drop' => array(
+				]
+			],
+			'drop' => [
 				'useless'
-			)
-		);
+			]
+		];
 
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts',
 			'fields' => $fields,
 			'records' => $records,
 			'alters' => $alters
-		));
+		]);
 
 		$this->assertEqual($alters, $fixture->alter());
 
@@ -194,42 +194,42 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('createSchema', $call['method']);
 		$this->assertEqual('contacts', $call['params'][0]);
 
-		$expected = array(
-			'_id' => array('type' => 'string', 'length' => 24),
-			'firstname' => array('type' => 'string'),
-			'lastname' => array('type' => 'string', 'default' => 'li3')
-		);
+		$expected = [
+			'_id' => ['type' => 'string', 'length' => 24],
+			'firstname' => ['type' => 'string'],
+			'lastname' => ['type' => 'string', 'default' => 'li3']
+		];
 		$this->assertEqual($expected, $call['params'][1]->fields());
 
-		$expected = array(
-			array('_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'),
-			array('_id' => new MongoId('4c3628558ead0e5941000002'), 'firstname' => 'Gwoo')
-		);
+		$expected = [
+			['_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'],
+			['_id' => new MongoId('4c3628558ead0e5941000002'), 'firstname' => 'Gwoo']
+		];
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual(array('data' => $expected[0]), $query->data());
+		$this->assertEqual(['data' => $expected[0]], $query->data());
 
 		$call = $this->_callable->call[2];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual(array('data' => $expected[1]), $query->data());
+		$this->assertEqual(['data' => $expected[1]], $query->data());
 	}
 
 	public function testPopulate() {
-		$fields = array(
-			'id' => array('type' => 'id'),
-			'name' => array('type' => 'string'),
-			'useless' => array('type' => 'string')
-		);
+		$fields = [
+			'id' => ['type' => 'id'],
+			'name' => ['type' => 'string'],
+			'useless' => ['type' => 'string']
+		];
 
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts',
 			'fields' => $fields
-		));
+		]);
 
 		$fixture->create(false);
 		$this->assertEqual(1, count($this->_callable->call));
@@ -237,39 +237,39 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('createSchema', $call['method']);
 		$this->assertEqual('contacts', $call['params'][0]);
 
-		$record = array('id' => 1, 'name' => 'Nate', 'useless' => 'a');
+		$record = ['id' => 1, 'name' => 'Nate', 'useless' => 'a'];
 		$fixture->populate($record);
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$this->assertEqual(array('data' => $record), $query->data());
+		$this->assertEqual(['data' => $record], $query->data());
 	}
 
 	public function testLiveAlter() {
-		$fields = array(
-			'id' => array('type' => 'id'),
-			'name' => array('type' => 'string'),
-			'useless' => array('type' => 'string')
-		);
+		$fields = [
+			'id' => ['type' => 'id'],
+			'name' => ['type' => 'string'],
+			'useless' => ['type' => 'string']
+		];
 
-		$fixture = new Fixture(array(
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts',
 			'fields' => $fields
-		));
+		]);
 
-		$fixture->alter('change', 'id', array(
+		$fixture->alter('change', 'id', [
 			'type' => 'string',
 			'length' => '24',
 			'to' => '_id',
 			'value' => function ($val) {
 				return new MongoId('4c3628558ead0e594' . (string) ($val + 1000000));
 			}
-		));
-		$fixture->alter('change', 'name', array('to' => 'firstname'));
+		]);
+		$fixture->alter('change', 'name', ['to' => 'firstname']);
 		$fixture->alter('drop', 'useless');
-		$fixture->alter('add', 'lastname', array('type' => 'string', 'default' => 'li3'));
+		$fixture->alter('add', 'lastname', ['type' => 'string', 'default' => 'li3']);
 
 		$fixture->create(false);
 		$this->assertEqual(1, count($this->_callable->call));
@@ -277,47 +277,47 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('createSchema', $call['method']);
 		$this->assertEqual('contacts', $call['params'][0]);
 
-		$record = array('id' => 1, 'name' => 'Nate', 'useless' => 'a');
+		$record = ['id' => 1, 'name' => 'Nate', 'useless' => 'a'];
 		$fixture->populate($record);
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$expected = array('_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate');
-		$this->assertEqual(array('data' => $expected), $query->data());
+		$expected = ['_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'];
+		$this->assertEqual(['data' => $expected], $query->data());
 
-		$record = array('id' => 1, 'name' => 'Nate', 'useless' => 'a');
+		$record = ['id' => 1, 'name' => 'Nate', 'useless' => 'a'];
 		$fixture->populate($record, false);
 		$call = $this->_callable->call[2];
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$expected = array('id' => 1, 'name' => 'Nate');
-		$this->assertEqual(array('data' => array()), $query->data());
+		$expected = ['id' => 1, 'name' => 'Nate'];
+		$this->assertEqual(['data' => []], $query->data());
 	}
 
 	public function testSchemaLess() {
-		$record = array(
+		$record = [
 			'_id' => new MongoId('4c3628558ead0e5941000001'),
 			'name' => 'John'
-		);
-		$fixture = new Fixture(array(
+		];
+		$fixture = new Fixture([
 			'connection' => $this->_connection,
 			'source' => 'contacts',
-			'fields' => array(),
-			'records' => array($record),
+			'fields' => [],
+			'records' => [$record],
 			'locked' => false
-		));
+		]);
 
-		MockLogCall::$returnStatic = array('enabled' => false);
-		$this->_callable->return = array('sources' => array('contacts'));
+		MockLogCall::$returnStatic = ['enabled' => false];
+		$this->_callable->return = ['sources' => ['contacts']];
 
 		$fixture->drop();
 		$call = $this->_callable->call[0];
 		$this->assertEqual('delete', $call['method']);
 
 		$this->_callable->__clear();
-		$this->_callable->return = array('sources' => array('contacts'));
+		$this->_callable->return = ['sources' => ['contacts']];
 		$fixture->create();
 		$call = $this->_callable->call[0];
 		$this->assertEqual(1, count($this->_callable->call));
@@ -325,14 +325,14 @@ class FixtureTest extends \lithium\test\Unit {
 
 
 		$this->_callable->__clear();
-		$this->_callable->return = array('sources' => array('contacts'));
+		$this->_callable->return = ['sources' => ['contacts']];
 		$fixture->save();
 		$this->assertEqual(2, count($this->_callable->call));
 		$call = $this->_callable->call[0];
 		$this->assertEqual('delete', $call['method']);
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
-		$this->assertEqual(array('data' => $record), $call['params'][0]->data());
+		$this->assertEqual(['data' => $record], $call['params'][0]->data());
 	}
 }
 

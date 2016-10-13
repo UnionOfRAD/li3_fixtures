@@ -18,7 +18,7 @@ class Connection extends \lithium\core\Object {
 	 *
 	 * @var array
 	 */
-	protected $_autoConfig = array('connection', 'fixtures');
+	protected $_autoConfig = ['connection', 'fixtures'];
 
 	/**
 	 * Connection name to use.
@@ -32,14 +32,14 @@ class Connection extends \lithium\core\Object {
 	 *
 	 * @var array
 	 */
-	protected $_loaded = array();
+	protected $_loaded = [];
 
 	/**
 	 * Holds the fixture classes to be instantiated indexed by a name.
 	 *
 	 * @var array
 	 */
-	protected $_fixtures = array();
+	protected $_fixtures = [];
 
 	/**
 	 * Initializes class configuration (`$_config`), and assigns object properties using the
@@ -48,8 +48,8 @@ class Connection extends \lithium\core\Object {
 	 * @see lithium\core\Object::__construct()
 	 * @param array $config The configuration options
 	 */
-	public function __construct(array $config = array()) {
-		$defaults = array('alters' => array());
+	public function __construct(array $config = []) {
+		$defaults = ['alters' => []];
 		parent::__construct($config + $defaults);
 	}
 
@@ -75,10 +75,10 @@ class Connection extends \lithium\core\Object {
 	 */
 	protected function _instantiate($name) {
 		if (isset($this->_fixtures[$name])) {
-			$options = array(
+			$options = [
 				'connection' => $this->_connection,
 				'alters' => $this->_config['alters']
-			);
+			];
 			$this->_loaded[$name] = new $this->_fixtures[$name]($options);
 			return true;
 		} else {
@@ -104,7 +104,7 @@ class Connection extends \lithium\core\Object {
 	 * @param mixed $names An array of fixture name.
 	 * @param boolean $drop If `true` drop the fixture before creating it
 	 */
-	public function create(array $names = array(), $drop = true) {
+	public function create(array $names = [], $drop = true) {
 		$this->_create($names, $drop, false);
 	}
 
@@ -114,7 +114,7 @@ class Connection extends \lithium\core\Object {
 	 * @param mixed $names An array of fixture name.
 	 * @param boolean $drop If `true` drop the fixture before loading it
 	 */
-	public function save(array $names = array(), $drop = true) {
+	public function save(array $names = [], $drop = true) {
 		$this->_create($names, $drop, true);
 	}
 
@@ -125,7 +125,7 @@ class Connection extends \lithium\core\Object {
 	 * @param boolean $drop If `true` drop the fixture before creating it
 	 * @param boolean $save If `true` save fixture's records in the database
 	 */
-	protected function _create($names = array(), $drop = true, $save = true) {
+	protected function _create($names = [], $drop = true, $save = true) {
 		$names = $names ?: array_keys($this->_fixtures);
 
 		foreach ((array) $names as $name) {
@@ -145,7 +145,7 @@ class Connection extends \lithium\core\Object {
 	 *
 	 * @param mixed $names The fixtures name to truncate.
 	 */
-	public function truncate(array $names = array()) {
+	public function truncate(array $names = []) {
 		$names = $names ?: array_keys($this->_loaded);
 		foreach ($names as $name) {
 			$fixture = $this->get($name);
@@ -159,7 +159,7 @@ class Connection extends \lithium\core\Object {
 	 * @param array $names The fixtures name to drop.
 	 * @param boolean $safe If `true` drop the fixture only if exists
 	 */
-	public function drop(array $names = array(), $safe = true) {
+	public function drop(array $names = [], $safe = true) {
 		$names = $names ?: array_keys($this->_loaded);
 		foreach ($names as $name) {
 			$fixture = $this->get($name);
@@ -176,8 +176,8 @@ class Connection extends \lithium\core\Object {
 		foreach ($this->_loaded as $name => $fixture) {
 			$fixture->drop();
 		}
-		$this->_loaded = array();
-		$this->_config = array();
+		$this->_loaded = [];
+		$this->_config = [];
 	}
 }
 

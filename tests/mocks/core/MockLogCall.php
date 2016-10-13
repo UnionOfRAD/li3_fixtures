@@ -10,30 +10,30 @@ namespace li3_fixtures\tests\mocks\core;
 
 class MockLogCall extends \lithium\core\Object {
 
-	public $construct = array();
+	public $construct = [];
 
-	public $get = array();
+	public $get = [];
 
-	public $return = array();
+	public $return = [];
 
-	public static $returnStatic = array();
+	public static $returnStatic = [];
 
-	public $call = array();
+	public $call = [];
 
-	public static $callStatic = array();
+	public static $callStatic = [];
 
 	public function __construct() {
 		$this->construct = func_get_args();
 	}
 
 	public function __clear() {
-		$this->call = array();
-		$this->return = array();
-		$this->get = array();
-		static::$callStatic = array();
+		$this->call = [];
+		$this->return = [];
+		$this->get = [];
+		static::$callStatic = [];
 	}
 
-	public function __call($method, $params = array()) {
+	public function __call($method, $params = []) {
 		$call = compact('method', 'params');
 		$this->call[] = $call;
 		return isset($this->return[$method]) ? $this->return[$method]: $call;
