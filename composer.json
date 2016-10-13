@@ -1,6 +1,6 @@
 {
     "name": "unionofrad/li3_fixtures",
-    "description": "The fixtures library for the Lithium PHP framework",
+    "description": "The fixtures library for the li3 PHP framework",
     "keywords": ["lithium", "li3", "fixtures", "testing"],
     "homepage": "http://li3.me",
     "license": "BSD-3-Clause",
