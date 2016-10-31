@@ -30,8 +30,9 @@ class ConnectionTest extends \lithium\test\Unit {
 	}
 
 	public function testInitMissingConnection() {
-		$this->expectException("The `'connection'` option must be set.");
-		new Connection();
+		$this->assertException("The `'connection'` option must be set.", function() {
+			new Connection();
+		});
 	}
 
 	public function testInstantiateFixture() {
@@ -44,8 +45,9 @@ class ConnectionTest extends \lithium\test\Unit {
 	}
 
 	public function testMissingFixture() {
-		$this->expectException("Undefined fixture named: `foo`.");
-		$this->_adapter->get('foo');
+		$this->assertException("Undefined fixture named: `foo`.", function() {
+			$this->_adapter->get('foo');
+		});
 	}
 
 	public function testCreate() {

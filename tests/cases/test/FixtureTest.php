@@ -31,13 +31,15 @@ class FixtureTest extends \lithium\test\Unit {
 	}
 
 	public function testInitMissingConnection() {
-		$this->expectException("The `'connection'` option must be set.");
-		new Fixture();
+		$this->assertException("The `'connection'` option must be set.", function() {
+			new Fixture();
+		});
 	}
 
 	public function testInitMissingModelAndSource() {
-		$this->expectException("The `'model'` or `'source'` option must be set.");
-		new Fixture(['connection' => $this->_connection]);
+		$this->assertException("The `'model'` or `'source'` option must be set.", function() {
+			new Fixture(['connection' => $this->_connection]);
+		});
 	}
 
 	public function testCreate() {
