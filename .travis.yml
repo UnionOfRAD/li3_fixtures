@@ -1,8 +1,5 @@
 language: php
 
-env:
-  - OPCODE_CACHE=apc
-
 php:
   - 5.5
   - 5.6

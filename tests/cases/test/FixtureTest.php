@@ -8,10 +8,10 @@
 
 namespace li3_fixtures\tests\cases\test;
 
-use MongoId;
 use lithium\data\Connections;
 use li3_fixtures\tests\mocks\core\MockLogCall;
 use li3_fixtures\test\Fixture;
+use li3_fixtures\tests\mocks\data\source\mongo_db\MockMongoId;
 
 class FixtureTest extends \lithium\test\Unit {
 
@@ -168,7 +168,7 @@ class FixtureTest extends \lithium\test\Unit {
 					'length' => '24',
 					'to' => '_id',
 					'value' => function ($val) {
-						return new MongoId('4c3628558ead0e594' . (string) ($val + 1000000));
+						return new MockMongoId('4c3628558ead0e594' . (string) ($val + 1000000));
 					}
 				],
 				'name' => [
@@ -204,8 +204,8 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual($expected, $call['params'][1]->fields());
 
 		$expected = [
-			['_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'],
-			['_id' => new MongoId('4c3628558ead0e5941000002'), 'firstname' => 'Gwoo']
+			['_id' => new MockMongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'],
+			['_id' => new MockMongoId('4c3628558ead0e5941000002'), 'firstname' => 'Gwoo']
 		];
 		$call = $this->_callable->call[1];
 		$this->assertEqual('create', $call['method']);
@@ -266,7 +266,7 @@ class FixtureTest extends \lithium\test\Unit {
 			'length' => '24',
 			'to' => '_id',
 			'value' => function ($val) {
-				return new MongoId('4c3628558ead0e594' . (string) ($val + 1000000));
+				return new MockMongoId('4c3628558ead0e594' . (string) ($val + 1000000));
 			}
 		]);
 		$fixture->alter('change', 'name', ['to' => 'firstname']);
@@ -285,7 +285,7 @@ class FixtureTest extends \lithium\test\Unit {
 		$this->assertEqual('create', $call['method']);
 		$query = $call['params'][0];
 		$this->assertEqual('create', $query->type());
-		$expected = ['_id' => new MongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'];
+		$expected = ['_id' => new MockMongoId('4c3628558ead0e5941000001'), 'firstname' => 'Nate'];
 		$this->assertEqual(['data' => $expected], $query->data());
 
 		$record = ['id' => 1, 'name' => 'Nate', 'useless' => 'a'];
@@ -300,7 +300,7 @@ class FixtureTest extends \lithium\test\Unit {
 
 	public function testSchemaLess() {
 		$record = [
-			'_id' => new MongoId('4c3628558ead0e5941000001'),
+			'_id' => new MockMongoId('4c3628558ead0e5941000001'),
 			'name' => 'John'
 		];
 		$fixture = new Fixture([
