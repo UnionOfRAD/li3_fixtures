@@ -13,3 +13,6 @@ before_script:
   - sed -i -e 's/?>/Libraries::add("li3_fixtures"); ?>/g' app/config/bootstrap/libraries.php
 
 script: libraries/lithium/console/li3 test libraries/li3_fixtures/tests
+
+notifications:
+  email: false
