@@ -6,7 +6,7 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-namespace li3_fixtures\extensions\adapter\test\fixtures;
+namespace li3_fixtures\test\fixtures\adapter;
 
 use lithium\core\ConfigException;
 use UnexpectedValueException;
