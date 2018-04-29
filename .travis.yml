@@ -7,7 +7,7 @@ php:
 
 before_script:
   - cd ../
-  - composer create-project --keep-vcs unionofrad/framework framework 1.1.*@dev
+  - composer create-project --keep-vcs unionofrad/framework framework 1.2.*@dev
   - cd framework
   - mv ../li3_fixtures app/libraries/
   - sed -i -e 's/?>/Libraries::add("li3_fixtures"); ?>/g' app/config/bootstrap/libraries.php
