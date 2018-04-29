@@ -8,7 +8,7 @@
 
 namespace li3_fixtures\tests\cases\test\fixtures\adapter;
 
-use li3_fixtures\tests\cases\test\fixtures\adapter\Connection;
+use li3_fixtures\test\fixtures\adapter\Connection;
 
 class ConnectionTest extends \lithium\test\Unit {
 
