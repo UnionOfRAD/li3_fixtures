@@ -9,6 +9,7 @@
 namespace li3_fixtures\test;
 
 use lithium\core\ConfigException;
+use lithium\core\Libraries;
 
 class Fixture extends \lithium\data\Schema {
 
@@ -213,11 +214,11 @@ class Fixture extends \lithium\data\Schema {
 		$return = true;
 
 		if ($db::enabled('schema')) {
-			$schema = $this->_instance('schema', [
+			$schema = Libraries::instance(null, 'schema', [
 				'fields' => $this->_alteredFields,
 				'meta' => $this->_meta,
 				'locked' => $this->_locked
-			]);
+			], $this->_classes);
 
 			$return = $db->createSchema($this->_source, $schema);
 		}
@@ -273,7 +274,7 @@ class Fixture extends \lithium\data\Schema {
 		$options = [
 			'type' => 'create', 'source' => $this->_source, 'data' => ['data' => $data]
 		];
-		$query = $this->_instance('query', $options);
+		$query = Libraries::instance(null, 'query', $options, $this->_classes);
 		return $db->create($query);
 	}
 
@@ -293,7 +294,7 @@ class Fixture extends \lithium\data\Schema {
 			}
 		}
 		$options = ['source' => $this->_source];
-		$query = $this->_instance('query', $options);
+		$query = Libraries::instance(null, 'query', $options, $this->_classes);
 		return $db->delete($query);
 	}
 
